@@ -17,12 +17,14 @@ int8_t threshold;
 
 RANGING_SENSOR_Result_t *plastval, *pval, lastval, val;
 
+//Sets the threshold for the sensitivty of the algorithm (in mm)
 void initDetectionFunction(int8_t res){
 
 	threshold = res;
 
 }
 
+//Fills synthetic data in the structs from the library
 void fillDataInStructs(){
 
 	int8_t i;
@@ -34,18 +36,20 @@ void fillDataInStructs(){
 	}
 }
 
+//Changes data for 1-3 random selected zones
 void alterData(){
 
 	int8_t i, numberOfChanges = 3, temp;
 
 	printStatement();
 
-
 	for(i = 0; i < ZONES_PER_ROW*ZONES_PER_ROW; i++){
 		val.ZoneResult[i].Distance[0] = 1000;
 		lastval.ZoneResult[i].Distance[0] = 1000;
 	}
+
 	for(i = 0; i < numberOfChanges; i++){
+
 		temp = rand()%15;
 		lastval.ZoneResult[temp].Distance[0] = 500;
 	}
@@ -54,14 +58,27 @@ void alterData(){
 
 }
 
+void placeBall(){
+	int8_t temp;
+
+	temp = rand()%15;
+
+	lastval.ZoneResult[temp].Distance[0] = 500;
+
+
+}
+
+//Goes to (x,y) in the terminal
 void gotoxy(int8_t r, int8_t c){
 	printf("%c[%d;%dH",ESC,c,r);
 }
 
+//Clears the screen in the terminal
 void clrscr(){
 	printf("%c[2J",ESC);
 }
 
+//Checks if the condition: (last_value - current_value > threshold) is true
 void checkEvent(){
 
 	int8_t i;
@@ -82,6 +99,7 @@ void checkEvent(){
 
 }
 
+//Prints the change in case the condition described above is true
 void printChange(int8_t zone){
 
 	int8_t i;
@@ -112,6 +130,7 @@ void printChange(int8_t zone){
 	}
 }
 
+//Prints the 16 zones
 void printStatement(){
 
 	int8_t i, j;

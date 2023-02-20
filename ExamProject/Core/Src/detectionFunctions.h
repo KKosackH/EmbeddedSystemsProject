@@ -13,6 +13,7 @@
 #define RANGING_SENSOR_NB_TARGET_PER_ZONE (1U)
 #define RANGING_SENSOR_MAX_NB_ZONES (16U)
 
+//The structs used in the library
 typedef struct
 {
   uint32_t NumberOfTargets;
